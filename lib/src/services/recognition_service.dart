@@ -41,6 +41,9 @@ class RecognitionService {
   /// [recognizedUser] The user that is recognized.
   UserModel? recognizedUser;
 
+  /// The distance value of the last face recognition attempt
+  double? lastDistance;
+
   /// Performs face recognition on the provided image frames and detected faces.
   ///
   /// This method processes the provided image frames (either from the camera or a local image) and
@@ -91,6 +94,10 @@ class RecognitionService {
           croppedFace: croppedFace,
           location: faceRect,
           face: face);
+
+      if (recognizedUser != null) {
+        lastDistance = recognizedUser!.distance;
+      }
 
       if (recognizedUser!.distance < threshold &&
           recognizedUser!.distance >= 0) {
